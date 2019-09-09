@@ -5,7 +5,7 @@
 [![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/taoyuan/memstreams.svg?logo=snyk)](https://github.com/taoyuan/memstreams/network/alerts)
 [![Code Climate coverage](https://img.shields.io/codeclimate/coverage/taoyuan/memstreams.svg?logo=code-climate)](https://codeclimate.com/github/taoyuan/memstreams)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/taoyuan/memstreams.svg?logo=code-climate)](https://codeclimate.com/github/taoyuan/memstreams)
-[![Greenkeeper badge](https://img.shields.io/badge/-enabled-green.svg?logo=greenkeeper&color=grey)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://img.shields.io/badge/-enabled-green.svg?logo=greenkeeper&color=grey)](https://greenkeeper.io/) [![Greenkeeper badge](https://badges.greenkeeper.io/taoyuan/memstreams.svg)](https://greenkeeper.io/)
 ![node](https://img.shields.io/node/v/memstreams.svg?label=&logo=node.js&color=grey)
 ![npm type definitions](https://img.shields.io/npm/types/memstreams.svg)
 ![GitHub](https://img.shields.io/github/license/taoyuan/memstreams.svg)
