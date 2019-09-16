@@ -3,9 +3,8 @@ import {chunk2buf} from "./utils";
 import {MemReadable, MemReader, MemWriter, MemWriterOptions} from "./types";
 
 export class BufferWriter extends Writable implements MemWriter {
+  _queue: Buffer[];
   _data: Buffer;
-
-  queue: Buffer[];
 
   constructor(options: MemWriterOptions = {}) {
     options.objectMode = false;
@@ -14,12 +13,16 @@ export class BufferWriter extends Writable implements MemWriter {
   }
 
   init() {
-    this.queue = [];
+    this._queue = [];
+  }
+
+  get queue() {
+    return this._queue
   }
 
   get data() {
-    if (!this._data || this._data.length < this.queue.reduce((pre, curr) => pre + curr.length, 0)) {
-      this._data = Buffer.concat(this.queue);
+    if (!this._data || this._data.length < this._queue.reduce((pre, curr) => pre + curr.length, 0)) {
+      this._data = Buffer.concat(this._queue);
     }
     return this._data;
   }
@@ -29,7 +32,7 @@ export class BufferWriter extends Writable implements MemWriter {
     if (this.listenerCount('write')) {
       this.emit('write', data);
     } else {
-      this.queue.push(data);
+      this._queue.push(data);
     }
     callback();
   }

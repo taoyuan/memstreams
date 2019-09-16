@@ -13,9 +13,8 @@ export interface MemReadable {
 }
 
 export interface MemWritable {
-  queue: any[] | Buffer[];
+  readonly queue: any[] | Buffer[];
   readonly data: any[] | Buffer;
-
   forward<T extends MemReader>(destination: T, options?: { end?: boolean; }): T;
 }
 

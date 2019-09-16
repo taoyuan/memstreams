@@ -2,7 +2,7 @@ import {Writable} from "readable-stream";
 import {MemReader, MemWritable, MemWriterOptions} from "./types";
 
 export class ObjectWriter extends Writable implements MemWritable {
-  queue: any[];
+  _queue: any[];
 
   constructor(options: MemWriterOptions = {}) {
     options.objectMode = true;
@@ -11,18 +11,22 @@ export class ObjectWriter extends Writable implements MemWritable {
   }
 
   init() {
-    this.queue = [];
+    this._queue = [];
+  }
+
+  get queue() {
+    return this._queue;
   }
 
   get data() {
-    return [...this.queue];
+    return [...this._queue];
   }
 
   _write(chunk: any, encoding: BufferEncoding, callback: (error?: Error | null) => void): void {
     if (this.listenerCount('write')) {
       this.emit('write', chunk);
     } else {
-      this.queue.push(chunk);
+      this._queue.push(chunk);
     }
     callback();
   }
