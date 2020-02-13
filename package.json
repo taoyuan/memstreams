@@ -34,7 +34,7 @@
     "test": "npm run build && nyc mocha --recursive -r ts-node/register \"src/__tests__/**/*.test.ts\""
   },
   "dependencies": {
-    "readable-stream": "~3.4.0"
+    "readable-stream": "~3.6.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2",
