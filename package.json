@@ -42,7 +42,7 @@
     "@types/readable-stream": "^2.3.4",
     "@types/sinon": "^7.0.13",
     "chai": "^4.2",
-    "mocha": "^6.2",
+    "mocha": "^7.1.1",
     "nyc": "^15.0.0",
     "prettier": "^1.18.2",
     "rimraf": "^3.0.0",
