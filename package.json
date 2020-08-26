@@ -1,7 +1,7 @@
 {
   "name": "memstreams",
   "description": "Memory Streams library for JavaScript based on readable-stream",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Yuan Tao <towyuan@outlook.com>",
