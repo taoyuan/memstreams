@@ -1,5 +1,5 @@
-import {assert} from 'chai';
-import {ObjectReader} from "../object-reader";
+import {expect} from '@tib/testlab';
+import {ObjectReader} from '../object-reader';
 
 describe('ObjectReader', function () {
   it('should work with array as source', function (done) {
@@ -7,7 +7,7 @@ describe('ObjectReader', function () {
     const stream = new ObjectReader(source);
     const expected = source[Symbol.iterator]();
 
-    stream.on('data', data => assert.deepEqual(data, expected.next().value));
+    stream.on('data', data => expect(data).deepEqual(expected.next().value));
     stream.on('end', done);
   });
 
@@ -16,7 +16,7 @@ describe('ObjectReader', function () {
     const stream = new ObjectReader(source);
     const expected = source[Symbol.iterator]();
 
-    stream.on('data', data => assert.deepEqual(data, expected.next().value));
+    stream.on('data', data => expect(data).deepEqual(expected.next().value));
     stream.on('end', done);
   });
 
@@ -30,7 +30,7 @@ describe('ObjectReader', function () {
     const stream = new ObjectReader(source);
     const expected = generator();
 
-    stream.on('data', data => assert.deepEqual(data, expected.next().value));
+    stream.on('data', data => expect(data).deepEqual(expected.next().value));
     stream.on('end', done);
   });
 });

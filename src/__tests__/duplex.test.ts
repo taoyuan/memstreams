@@ -1,23 +1,21 @@
-import {assert} from 'chai';
-import sinon = require("sinon");
-
-import {BufferDuplex} from "../buffer-duplex";
-import {MemDuplex} from "../types";
-import {Duplex} from "readable-stream";
-import {ObjectDuplex} from "../object-duplex";
-
+import {expect, sinon} from '@tib/testlab';
+import {Duplex} from 'readable-stream';
+import {MemDuplex} from '../types';
+import {BufferDuplex} from '../buffer-duplex';
+import {ObjectDuplex} from '../object-duplex';
 
 const testReadable = (
   stream: MemDuplex,
-  source: Iterable<any> | ArrayLike<any>,
+  source: Iterable<any> | Array<any>,
   objectMode: boolean,
-  cb: () => void
+  cb: () => void,
 ) => {
-  const expectedIt = source[Symbol.iterator]();
+  const expectedIt: Iterator<any> = source[Symbol.iterator]();
 
   const tester = objectMode
-    ? data => assert.equal(data, expectedIt.next().value)
-    : data => assert.deepEqual(data, Buffer.from([expectedIt.next().value]));
+    ? (data: any) => expect(data).equal(expectedIt.next().value)
+    : (data: any) =>
+        expect(data).deepEqual(Buffer.from([expectedIt.next().value]));
 
   stream.on('data', tester);
   stream.on('end', cb);
@@ -27,27 +25,25 @@ const testWritable = (
   stream: MemDuplex,
   data: any,
   objectMode: boolean,
-  done: () => void
+  done: () => void,
 ) => {
   const spy = sinon.spy();
 
   for (let i = 0; i < data.length; i++) {
     stream.write(
-      typeof data == 'string'
-        ? Buffer.from(data.charAt(i))
-        : data[i],
-      spy
+      typeof data == 'string' ? Buffer.from(data.charAt(i)) : data[i],
+      spy,
     );
   }
   stream.end();
 
   stream.on('finish', () => {
-    assert.equal(spy.callCount, data.length);
+    expect(spy.callCount).equal(data.length);
     const res = stream.data;
     if (res instanceof Buffer) {
-      assert.equal(res.toString(), data);
+      expect(res.toString()).equal(data);
     } else {
-      assert.deepEqual(res, data);
+      expect(res).deepEqual(data);
     }
     done();
   });
@@ -61,11 +57,10 @@ const cbWhenCount = (count: number, done: () => void) => {
   };
 };
 
-
 describe('Duplex', function () {
   it('should initiate', function () {
-    assert.instanceOf(new BufferDuplex(), Duplex);
-    assert.instanceOf(new ObjectDuplex(), Duplex);
+    expect(new BufferDuplex()).instanceOf(Duplex);
+    expect(new ObjectDuplex()).instanceOf(Duplex);
   });
 
   describe('Half-duplex writable', function () {
@@ -116,16 +111,16 @@ describe('Duplex', function () {
       duplex.forward(duplex);
 
       const read = () => {
-        data.forEach(d => assert.deepEqual(duplex.read(), d));
-        assert.isNull(duplex.read());
+        data.forEach(d => expect(duplex.read()).deepEqual(d));
+        expect(duplex.read()).null();
         done();
       };
       const writeCb = cbWhenCount(data.length, read);
       data.forEach(d =>
         duplex.write(d, err => {
-          assert.isUndefined(err);
+          expect(err).undefined();
           writeCb();
-        })
+        }),
       );
     });
 
@@ -136,18 +131,18 @@ describe('Duplex', function () {
       duplex.forward(duplex);
 
       const read = () => {
-        assert.deepEqual(duplex.read(), Buffer.from(data.join('')));
-        assert.isNull(duplex.read());
+        expect(duplex.read()).deepEqual(Buffer.from(data.join('')));
+        expect(duplex.read()).null();
         done();
       };
       const writeCb = cbWhenCount(data.length, read);
       data.forEach(d =>
         duplex.write(d, err => {
-          assert.isUndefined(err);
+          expect(err).undefined();
           writeCb();
-        })
+        }),
       );
-    })
+    });
   });
 
   describe('pipe', function () {
@@ -163,14 +158,14 @@ describe('Duplex', function () {
       d1.forward(d2).forward(d1);
 
       d1.on('data', data => {
-        assert.isEmpty(d1.queue);
-        assert.deepEqual(data, d2data);
+        expect(d1.queue).empty();
+        expect(data).deepEqual(d2data);
         cb();
       });
 
       d2.on('data', data => {
-        assert.isEmpty(d2.queue);
-        assert.deepEqual(data, d1data);
+        expect(d2.queue).empty();
+        expect(data).deepEqual(d1data);
         cb();
       });
 

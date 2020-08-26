@@ -1,7 +1,14 @@
-coverage/
-node_modules/
+.idea
+node_modules
 npm-debug.log
+.DS_Store
+coverage
 .nyc_output
-.idea/
-*.iml
-lib/
+*.tgz
+.sandbox
+*.tsbuildinfo
+dist
+
+# ESLint cache
+.eslintcache
+media

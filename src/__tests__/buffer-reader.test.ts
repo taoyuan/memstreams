@@ -1,14 +1,16 @@
-import {assert} from 'chai';
-import {BufferReader} from "../buffer-reader";
+import {expect} from '@tib/testlab';
+import {BufferReader} from '../buffer-reader';
 
 describe('MemReadable', function () {
   it('should read', function () {
     // Read method
     const reader = new BufferReader(['Hello World\n']);
-    assert.deepEqual(reader.read().toString(), 'Hello World\n');
-    assert.notOk(reader.read());
+    expect(reader.read().toString()).equal('Hello World\n');
+    expect(reader.read()).not.ok();
 
-    assert.throws(() => reader.push('Hello Universe\n'), 'stream.push() after EOF');
+    expect(() => reader.push('Hello Universe\n')).throw(
+      'stream.push() after EOF',
+    );
   });
 
   it('should work with buffer as source', function (done) {
@@ -17,7 +19,7 @@ describe('MemReadable', function () {
     const itExpected = source[Symbol.iterator]();
 
     stream.on('data', data => {
-      assert.deepEqual(data, Buffer.from([itExpected.next().value]));
+      expect(data).deepEqual(Buffer.from([itExpected.next().value]));
     });
     stream.on('end', done);
   });
@@ -28,7 +30,7 @@ describe('MemReadable', function () {
     const itExpected = source[Symbol.iterator]();
 
     stream.on('data', data => {
-      assert.deepEqual(data, Buffer.from(itExpected.next().value));
+      expect(data).deepEqual(Buffer.from(itExpected.next().value));
     });
     stream.on('end', done);
   });

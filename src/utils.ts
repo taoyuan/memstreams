@@ -1,7 +1,9 @@
-import {Class} from "./types";
+import {Class} from './types';
 
 export function any2buf(value: any, encoding: BufferEncoding) {
-  return Number.isInteger(value) ? Buffer.from([value]) : Buffer.from(value, encoding);
+  return Number.isInteger(value)
+    ? Buffer.from([value])
+    : Buffer.from(value, encoding);
 }
 
 export function chunk2buf(chunk: Buffer | string, encoding?: BufferEncoding) {
@@ -14,7 +16,7 @@ export function applyMixins(derive: Class<any>, bases: Class<any>[]) {
       Object.defineProperty(
         derive.prototype,
         name,
-        Object.getOwnPropertyDescriptor(base.prototype, name)!
+        Object.getOwnPropertyDescriptor(base.prototype, name)!,
       );
     });
   });

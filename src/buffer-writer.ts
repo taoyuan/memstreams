@@ -1,6 +1,6 @@
-import {Writable} from "readable-stream";
-import {chunk2buf} from "./utils";
-import {MemReadable, MemReader, MemWriter, MemWriterOptions} from "./types";
+import {Writable} from 'readable-stream';
+import {chunk2buf} from './utils';
+import {MemReader, MemWriter, MemWriterOptions} from './types';
 
 export class BufferWriter extends Writable implements MemWriter {
   _queue: Buffer[];
@@ -17,17 +17,25 @@ export class BufferWriter extends Writable implements MemWriter {
   }
 
   get queue() {
-    return this._queue
+    return this._queue;
   }
 
   get data() {
-    if (!this._data || this._data.length < this._queue.reduce((pre, curr) => pre + curr.length, 0)) {
+    if (
+      !this._data ||
+      this._data.length <
+        this._queue.reduce((pre, curr) => pre + curr.length, 0)
+    ) {
       this._data = Buffer.concat(this._queue);
     }
     return this._data;
   }
 
-  _write(chunk: Buffer | string, encoding: BufferEncoding, callback: (error?: Error | null) => void): void {
+  _write(
+    chunk: Buffer | string,
+    encoding: BufferEncoding,
+    callback: (error?: Error | null) => void,
+  ): void {
     const data = chunk2buf(chunk, encoding);
     if (this.listenerCount('write')) {
       this.emit('write', data);
@@ -37,7 +45,7 @@ export class BufferWriter extends Writable implements MemWriter {
     callback();
   }
 
-  forward<T extends MemReader>(destination: T, options?: { end?: boolean; }): T {
+  forward<T extends MemReader>(destination: T, options?: {end?: boolean}): T {
     const forward = (data: Buffer) => destination.push(data);
     this.on('write', forward);
 

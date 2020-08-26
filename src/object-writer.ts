@@ -1,5 +1,5 @@
-import {Writable} from "readable-stream";
-import {MemReader, MemWritable, MemWriterOptions} from "./types";
+import {Writable} from 'readable-stream';
+import {MemReader, MemWritable, MemWriterOptions} from './types';
 
 export class ObjectWriter extends Writable implements MemWritable {
   _queue: any[];
@@ -22,7 +22,11 @@ export class ObjectWriter extends Writable implements MemWritable {
     return [...this._queue];
   }
 
-  _write(chunk: any, encoding: BufferEncoding, callback: (error?: Error | null) => void): void {
+  _write(
+    chunk: any,
+    encoding: BufferEncoding,
+    callback: (error?: Error | null) => void,
+  ): void {
     if (this.listenerCount('write')) {
       this.emit('write', chunk);
     } else {
@@ -31,7 +35,7 @@ export class ObjectWriter extends Writable implements MemWritable {
     callback();
   }
 
-  forward<T extends MemReader>(destination: T, options?: { end?: boolean; }): T {
+  forward<T extends MemReader>(destination: T, options?: {end?: boolean}): T {
     const forward = (data: Buffer) => destination.push(data);
     this.on('write', forward);
 

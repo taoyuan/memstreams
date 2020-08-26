@@ -1,11 +1,9 @@
-import {assert} from "chai";
-import * as fs from "fs";
-import sinon = require("sinon");
-import {BufferWriter} from "../buffer-writer";
-import {BufferReader} from "../buffer-reader";
+import * as fs from 'fs';
+import {expect, sinon} from '@tib/testlab';
+import {BufferWriter} from '../buffer-writer';
+import {BufferReader} from '../buffer-reader';
 
 describe('BufWritable', function () {
-
   it('should write buffer', function (done) {
     const cb = sinon.spy();
     const data = "I'm a proud string";
@@ -18,24 +16,24 @@ describe('BufWritable', function () {
     writer.end();
 
     writer.on('finish', () => {
-      assert.equal(cb.callCount, data.length);
+      expect(cb.callCount).equal(data.length);
       const buffRes = writer.data;
-      assert.instanceOf(buffRes, Buffer);
-      assert.equal(buffRes.toString(), data);
+      expect(buffRes).instanceOf(Buffer);
+      expect(buffRes.toString()).equal(data);
       done();
     });
   });
 
   it('should write string', function () {
     // Write method
-    let writer = new BufferWriter();
+    const writer = new BufferWriter();
     writer.write('Hello World\n');
-    assert.ok(writer.data);
-    assert.deepEqual(writer.data, Buffer.from('Hello World\n'));
+    expect(writer.data).ok();
+    expect(writer.data).deepEqual(Buffer.from('Hello World\n'));
 
     // Write more
     writer.write('Hello Universe\n');
-    assert.deepEqual(writer.data, Buffer.from('Hello World\nHello Universe\n'));
+    expect(writer.data).deepEqual(Buffer.from('Hello World\nHello Universe\n'));
   });
 
   it('should pipe with buffer reader', function (done) {
@@ -48,8 +46,8 @@ describe('BufWritable', function () {
     // Then
     writer.on('finish', () => {
       const buffRes = writer.data;
-      assert.instanceOf(buffRes, Buffer);
-      assert.deepEqual(buffRes, Buffer.from(data));
+      expect(buffRes).instanceOf(Buffer);
+      expect(buffRes).deepEqual(Buffer.from(data));
       done();
     });
   });
@@ -60,7 +58,7 @@ describe('BufWritable', function () {
     const writer = new BufferWriter();
     reader.pipe(writer);
     setTimeout(function () {
-      assert.equal(writer.data.toString(), content.toString());
+      expect(writer.data.toString()).equal(content.toString());
       done();
     }, 10);
   });
@@ -71,7 +69,8 @@ describe('BufWritable', function () {
     writer.forward(reader);
 
     reader.on('data', data => {
-      assert.equal(data, 'hello');
+      expect(data).instanceOf(Buffer);
+      expect(data.toString()).equal('hello');
       done();
     });
 
