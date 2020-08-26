@@ -34,21 +34,21 @@
     "test": "npm run build && nyc mocha --recursive -r ts-node/register \"src/__tests__/**/*.test.ts\""
   },
   "dependencies": {
-    "readable-stream": "~3.4.0"
+    "readable-stream": "^3.6.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.2",
-    "@types/mocha": "^5.2",
-    "@types/readable-stream": "^2.3.4",
-    "@types/sinon": "^7.0.13",
-    "chai": "^4.2",
-    "mocha": "^6.2",
-    "nyc": "^15.0.0",
-    "prettier": "^1.18.2",
-    "rimraf": "^3.0.0",
-    "sinon": "^8.0.0",
-    "ts-node": "^8.4",
-    "typescript": "^3.6.3"
+    "@types/chai": "^4.2.12",
+    "@types/mocha": "^8.0.3",
+    "@types/readable-stream": "^2.3.9",
+    "@types/sinon": "^9.0.5",
+    "chai": "^4.2.0",
+    "mocha": "^8.1.2",
+    "nyc": "^15.1.0",
+    "prettier": "^2.1.1",
+    "rimraf": "^3.0.2",
+    "sinon": "^9.0.3",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
   },
   "nyc": {
     "all": true,
