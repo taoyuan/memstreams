@@ -68,7 +68,7 @@ Now you need / want to test it.
 `example.ts`
 
 ```typescript
-import {ObjectReader, ObjectWriter} from 'memstream';
+import {ObjectReader, ObjectWriter} from 'memstreams';
 import {Rounder} from './rounder';
 
 const input = [1.2, 2.6, 3.7];
