@@ -1,4 +1,4 @@
-import {expect} from '@tib/testlab';
+import {expect} from '@loopback/testlab';
 import {BufferReader} from '../buffer-reader';
 
 describe('MemReadable', function () {

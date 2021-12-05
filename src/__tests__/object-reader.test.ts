@@ -1,4 +1,4 @@
-import {expect} from '@tib/testlab';
+import {expect} from '@loopback/testlab';
 import {ObjectReader} from '../object-reader';
 
 describe('ObjectReader', function () {

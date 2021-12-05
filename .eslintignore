@@ -2,4 +2,7 @@ node_modules/
 dist/
 coverage/
 /sandbox
+/examples
 **/*.d.ts
+.mocharc.js
+.eslintrc.js

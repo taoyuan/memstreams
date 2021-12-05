@@ -1,4 +1,4 @@
-import {expect, sinon} from '@tib/testlab';
+import {expect, sinon} from '@loopback/testlab';
 import {Duplex} from 'readable-stream';
 import {MemDuplex} from '../types';
 import {BufferDuplex} from '../buffer-duplex';

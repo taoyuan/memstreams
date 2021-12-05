@@ -1,7 +1,9 @@
 {
   "name": "memstreams",
   "description": "Memory Streams library for JavaScript based on readable-stream",
-  "version": "0.3.0",
+  "version": "0.2.3",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Yuan Tao <towyuan@outlook.com>",
   "repository": {
     "type": "git",
@@ -19,55 +21,53 @@
   "readmeFilename": "README.md",
   "files": [
     "README.md",
-    "lib",
+    "dist",
     "src",
     "!*/__tests__"
   ],
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
   "scripts": {
-    "clean": "rimraf lib",
-    "format": "prettier --write \"{src,test}/**/*.ts\" --single-quote --trailing-comma es5",
-    "prepublishOnly": "npm run build",
-    "prebuild": "npm run clean && echo Using TypeScript && tsc --version",
-    "build": "tsc --pretty",
-    "test": "npm run build && nyc mocha --recursive -r ts-node/register \"src/__tests__/**/*.test.ts\""
+    "prerelease": "cross-env CI=1 npm run test",
+    "release": "np",
+    "build": "lb-tsc",
+    "build:full": "npm ci --ignore-scripts && npm run clean && npm run build",
+    "coverage": "lb-nyc report --reporter=text-summary",
+    "precoverage": "npm test",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "eslint": "lb-eslint --report-unused-disable-directives --cache .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\" \"**/*.md\"",
+    "prettier:check": "npm run prettier:cli -- --check",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "format": "npm run prettier:fix",
+    "clean": "lb-clean dist coverage .nyc_output *.tsbuildinfo",
+    "pretest": "npm run clean && npm run format",
+    "test": "lb-nyc npm run mocha",
+    "test:ci": "lb-nyc npm run mocha",
+    "posttest": "npm run lint",
+    "premocha": "npm run build",
+    "mocha": "lb-mocha \"dist/__tests__/**/*.js\"",
+    "preunit": "npm run build",
+    "unit": "lb-mocha \"dist/__tests__/unit/**/*.js\""
   },
   "dependencies": {
-    "readable-stream": "~3.6.0"
+    "readable-stream": "^3.6.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.2",
-    "@types/mocha": "^9.0",
+    "@loopback/build": "^8.0.0",
+    "@loopback/eslint-config": "^12.0.0",
+    "@loopback/testlab": "^4.0.0",
+    "@types/mocha": "^9.0.0",
     "@types/readable-stream": "^2.3.12",
-    "@types/sinon": "^10.0.6",
-    "chai": "^4.3",
-    "mocha": "^9.1",
-    "nyc": "^15.1.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "mocha": "^9.1.3",
+    "np": "^7.6.0",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
-    "sinon": "^12.0.1",
-    "ts-node": "^10.4",
     "typescript": "^4.5.2"
   },
-  "nyc": {
-    "all": true,
-    "reporter": [
-      "text",
-      "lcov"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "include": [
-      "src/**"
-    ],
-    "exclude": [
-      "src/__tests__/**",
-      "src/index.ts"
-    ]
-  },
   "engines": {
-    "node": "8.* || >= 10.*"
+    "node": ">= 10.*"
   }
 }

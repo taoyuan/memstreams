@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {expect, sinon} from '@tib/testlab';
+import {expect, sinon} from '@loopback/testlab';
 import {BufferWriter} from '../buffer-writer';
 import {BufferReader} from '../buffer-reader';
 

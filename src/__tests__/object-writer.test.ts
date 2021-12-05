@@ -1,4 +1,4 @@
-import {expect, sinon} from '@tib/testlab';
+import {expect, sinon} from '@loopback/testlab';
 import {ObjectWriter} from '../object-writer';
 import {ObjectReader} from '../object-reader';
 
