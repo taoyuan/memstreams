@@ -52,14 +52,14 @@
     "unit": "lb-mocha \"dist/__tests__/unit/**/*.js\""
   },
   "dependencies": {
-    "readable-stream": "^3.6.0"
+    "readable-stream": "^3.6.0",
+    "@types/readable-stream": "^2.3.13"
   },
   "devDependencies": {
     "@loopback/build": "^8.1.2",
     "@loopback/eslint-config": "^12.0.4",
     "@loopback/testlab": "^4.1.2",
     "@types/mocha": "^9.1.1",
-    "@types/readable-stream": "^2.3.13",
     "cross-env": "^7.0.3",
     "eslint": "^8.14.0",
     "mocha": "^10.0.0",
